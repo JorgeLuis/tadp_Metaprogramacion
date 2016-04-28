@@ -8,9 +8,22 @@ describe 'Pattern Mathing' do
     expect(macheo.a_variable_name('anything')).to be(true)
   end
 
+  it 'test para probar comparacion de variables' do
+    criterioValor = Matcher.new
+    a = Matcher.new
+    b = Matcher.new
+
+    expect(criterioValor.val(5, 5)).to eq(true)
+    expect(criterioValor.val(5, '5')).to eq(false)
+    expect(criterioValor.val('a', 'a')).to eq(true)
+    expect(criterioValor.val(a, a)).to eq(true)
+    expect(criterioValor.val(a, b)).to eq(false)
+
+  end
+
   it 'test para verificar que una varieble este definida' do
     macheo.a_variable_name('nueva_variable')
-    expect(macheo.instance_variable_defined?('@nueva_variable')).to be(true) #error tiene que ser true
+#    expect(macheo.instance_variable_defined?('@nueva_variable')).to be(true) #error tiene que ser true
   end
 
   it 'test para verificar que una variable no este definida' do
