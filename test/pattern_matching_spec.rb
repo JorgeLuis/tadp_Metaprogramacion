@@ -4,10 +4,23 @@ require_relative '../scr/pattern_matching'
 describe 'Pattern Mathing' do
   macheo = Matcher.new
 
+
+#========================== TEST 1A ====================================
   it 'test para bindear una variable' do
     expect(macheo.a_variable_name('anything')).to be(true)
   end
-  
+
+  it 'test para verificar que una varieble este definida' do
+    macheo.a_variable_name( 'nueva_variable')
+    expect(macheo.instance_variable_defined?('@nueva_variable')).to be(false) #error tiene que ser true
+  end
+
+  it 'test para verificar que una variable no este definida' do
+    expect(macheo.instance_variable_defined?("@b")).to be(false)
+  end
+
+#========================== TEST 1B ====================================
+
   it 'test para probar comparacion de variables' do
     criterioValor = Matcher.new
     a = Matcher.new
@@ -19,16 +32,9 @@ describe 'Pattern Mathing' do
     expect(criterioValor.val(a, a)).to eq(true)
     expect(criterioValor.val(a, b)).to eq(false)
 
-  end  
-
-  it 'test para verificar que una varieble este definida' do
-    macheo.a_variable_name( 'nueva_variable')
-    expect(macheo.instance_variable_defined?('@nueva_variable')).to be(false) #error tiene que ser true
   end
 
-  it 'test para verificar que una variable no este definida' do
-    expect(macheo.instance_variable_defined?("@b")).to be(false)
-  end
+#========================== TEST 1C ====================================
 
   it 'test para verificar si un objeto es del tipo indicado' do
     expect(macheo.type(1,Fixnum)).to be(true)
@@ -40,9 +46,9 @@ describe 'Pattern Mathing' do
   end
 
 
+#========================== TEST 1D ====================================
 
-
-  it 'test para verificar si se cumple si el objeto es una lista' do
+  it '1d.test para verificar si se cumple si el objeto es una lista' do
     an_array= [1,2,3,4]
     other_array= [1,2,3]
 
@@ -65,9 +71,9 @@ describe 'Pattern Mathing' do
   end
 
 
+#========================== TEST 1E ====================================
 
-
-  it 'Pruebo si los metodos de una clase entiende un objeto' do
+  it '1e.Pruebo si los metodos de una clase entiende un objeto' do
     class A
       def golpe
       end

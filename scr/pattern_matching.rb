@@ -1,6 +1,7 @@
 class Matcher
-    def a_variable_name(valor)
-   self.instance_eval{valor}
+
+  def a_variable_name(valor)
+    self.instance_eval{valor}
     true
   end
 
