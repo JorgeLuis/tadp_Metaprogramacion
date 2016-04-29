@@ -16,12 +16,15 @@ class Matcher
     objeto.class.equal?tipo
   end
 
-  def list (values1,values2)
+  def list (values1,values2,match_size)
     @flag=true
     values1.each_index { |index|
       if values1[index]!=values2[index]
         @flag=false
       end}
+    if (values1.length!=values2.length && match_size)
+      @flag=false
+    end
     @flag
   end
 
