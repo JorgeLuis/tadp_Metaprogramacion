@@ -20,6 +20,10 @@ class Matcher
       end}
     @flag
   end
+
+  def duck_typing(*args, obj)
+    return args.all? { |method| obj.respond_to? method}
+  end
 end
 
 
