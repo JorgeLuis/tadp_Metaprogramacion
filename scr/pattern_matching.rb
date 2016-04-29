@@ -4,10 +4,10 @@ class Matcher
     true
   end
 
-  def val
-
+  def val(variable_A, variable_B)
+    variable_A.eql? variable_B
   end
-
+  
   def type(objeto,tipo)
     objeto.class.equal?tipo
   end

@@ -7,6 +7,19 @@ describe 'Pattern Mathing' do
   it 'test para bindear una variable' do
     expect(macheo.a_variable_name('anything')).to be(true)
   end
+  
+  it 'test para probar comparacion de variables' do
+    criterioValor = Matcher.new
+    a = Matcher.new
+    b = Matcher.new
+
+    expect(criterioValor.val(5, 5)).to eq(true)
+    expect(criterioValor.val(5, '5')).to eq(false)
+    expect(criterioValor.val('a', 'a')).to eq(true)
+    expect(criterioValor.val(a, a)).to eq(true)
+    expect(criterioValor.val(a, b)).to eq(false)
+
+  end  
 
   it 'test para verificar que una varieble este definida' do
     macheo.a_variable_name( 'nueva_variable')
@@ -25,6 +38,8 @@ describe 'Pattern Mathing' do
     expect(macheo.type(macheo,Fixnum)).to be(false)
     expect(macheo.type(Symbol,"blee")).to be(false)
   end
+
+
 
   it 'test para verificar si se cumple si el objeto es una lista' do
     an_array= [1,2,3,4]
@@ -51,3 +66,5 @@ describe 'Pattern Mathing' do
 
 
 end
+
+
