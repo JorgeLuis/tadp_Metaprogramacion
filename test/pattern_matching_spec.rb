@@ -7,6 +7,19 @@ describe 'Pattern Mathing' do
   it 'test para bindear una variable' do
     expect(macheo.a_variable_name('anything')).to be(true)
   end
+  
+  it 'test para probar comparacion de variables' do
+    criterioValor = Matcher.new
+    a = Matcher.new
+    b = Matcher.new
+
+    expect(criterioValor.val(5, 5)).to eq(true)
+    expect(criterioValor.val(5, '5')).to eq(false)
+    expect(criterioValor.val('a', 'a')).to eq(true)
+    expect(criterioValor.val(a, a)).to eq(true)
+    expect(criterioValor.val(a, b)).to eq(false)
+
+  end  
 
   it 'test para verificar que una varieble este definida' do
     macheo.a_variable_name('nueva_variable')
