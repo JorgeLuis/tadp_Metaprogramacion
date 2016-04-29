@@ -32,13 +32,29 @@ end
 
 
 class Combinators
+  attr_reader :matchers, :a_Matcher
 
-  def and(un_matche,otro_match)
+  def initialize(matchers, a_Matcher)
+    @a_Matcher= a_Matcher
+    @matchers= {}
+    matchers.each do |matcher|
+      self.matchers[matcher] = nil
+    end
+  end
+
+  def set_Matchers(sym, value)
+    self.matchers[sym] = value
+  end
+
+  def and
 
   end
 
-  def or
-
+  def or(comparador)
+    instancia = @a_Matcher.new
+    matchers.any? { |metodo_Matcher, valor|
+      instancia.send "#{metodo_Matcher}".to_sym, valor, comparador
+    }
   end
 
   def not
