@@ -15,6 +15,15 @@ class Matcher
   def type(objeto,tipo)
     objeto.class.equal?tipo
   end
+
+  def list (values1,values2)
+    @flag=true
+    values1.each_index { |index|
+      if values1[index]!=values2[index]
+        @flag=false
+      end}
+    @flag
+  end
 end
 
 
