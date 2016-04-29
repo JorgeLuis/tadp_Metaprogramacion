@@ -6,22 +6,19 @@ describe 'Pattern Mathing' do
 
 
 #========================== TEST 1A ====================================
-  it 'test para bindear una variable' do
-    expect(macheo.a_variable_name('anything')).to be(true)
-  end
+  it 'Test: bindear una variable' do
+    a_variable_name= lambda do
+      |nombre|
+      nombre.to_sym
+      return true
+    end
 
-  it 'test para verificar que una varieble este definida' do
-    macheo.a_variable_name( 'nueva_variable')
-    expect(macheo.instance_variable_defined?('@nueva_variable')).to be(false) #error tiene que ser true
-  end
-
-  it 'test para verificar que una variable no este definida' do
-    expect(macheo.instance_variable_defined?("@b")).to be(false)
+    expect(a_variable_name.call('anything')).to be(true)
   end
 
 #========================== TEST 1B ====================================
 
-  it 'test para probar comparacion de variables' do
+  it 'Test: para probar comparacion de variables' do
     criterioValor = Matcher.new
     a = Matcher.new
     b = Matcher.new
@@ -36,11 +33,11 @@ describe 'Pattern Mathing' do
 
 #========================== TEST 1C ====================================
 
-  it 'test para verificar si un objeto es del tipo indicado' do
+  it 'Test: verifica si un objeto es del tipo indicado' do
     expect(macheo.type(1,Fixnum)).to be(true)
   end
 
-  it 'test para verificar si un objeto no es del tipo indicado' do
+  it 'Test: verifica si un objeto no es del tipo indicado' do
     expect(macheo.type(macheo,Fixnum)).to be(false)
     expect(macheo.type(Symbol,"blee")).to be(false)
   end
@@ -48,32 +45,58 @@ describe 'Pattern Mathing' do
 
 #========================== TEST 1D ====================================
 
-  it '1d.test para verificar si se cumple si el objeto es una lista' do
+  it 'Test: verifica si se cumple si el objeto es una lista' do
     an_array= [1,2,3,4]
     other_array= [1,2,3]
 
     myBlock= lambda do
-              |lista,condicion|
+              |lista,condicion,lista2|
 
-              if condicion
-                lista.equal?an_array
-              else
-                an_array.include?lista
+              if lista.size == lista2.size
+               return lista.equal?lista2
               end
 
-            end
+              if condicion
+                return false
 
-    puts(myBlock.call(an_array,true))
-    puts(myBlock.call(an_array,false))
-    #puts(myBlock.call(other_array,true))
+              elsif lista.size < lista2.size
+                  return lista.all?{ |x| lista2[x] }
+              elsif lista.size > lista2.size
+                return false
+              end
+    end
 
+    myBlock2= lambda do
+    |lista,lista2|
+      condicion = true
+      if lista.size == lista2.size
+        return lista.equal?lista2
+      end
+
+      if condicion
+        return false
+
+      elsif lista.size < lista2.size
+        return lista.all?{ |x| lista2[x] }
+      elsif lista.size > lista2.size
+        return false
+      end
+    end
+
+
+    expect(myBlock.call(an_array,true,an_array)).to be(true)
+    expect(myBlock.call(an_array,false,an_array)).to be(true)
+    expect(myBlock.call(other_array,true,an_array)).to be(false)
+    expect(myBlock.call(other_array,false,an_array)).to be(true)
+    expect(myBlock.call(an_array,false,other_array)).to be(false)
+    expect(myBlock2.call(other_array,an_array)).to be(false)
 
   end
 
 
 #========================== TEST 1E ====================================
 
-  it '1e.Pruebo si los metodos de una clase entiende un objeto' do
+  it 'Test: verifica si los metodos de una clase entiende un objeto' do
     class A
       def golpe
       end
