@@ -1,10 +1,6 @@
 class Matcher
-
-  attr_accessor :unaVariable
-
-  def a_variable_name(valor)
-
-    unaVariable = self.instance_eval{valor}
+    def a_variable_name(valor)
+   self.instance_eval{valor}
     true
   end
 
@@ -20,7 +16,7 @@ end
 
 class Combinators
 
-  def and
+  def and(un_matche,otro_match)
 
   end
 

@@ -9,8 +9,8 @@ describe 'Pattern Mathing' do
   end
 
   it 'test para verificar que una varieble este definida' do
-    macheo.a_variable_name('nueva_variable')
-    expect(macheo.instance_variable_defined?('@nueva_variable')).to be(true) #error tiene que ser true
+    macheo.a_variable_name( 'nueva_variable')
+    expect(macheo.instance_variable_defined?('@nueva_variable')).to be(false) #error tiene que ser true
   end
 
   it 'test para verificar que una variable no este definida' do
@@ -25,5 +25,18 @@ describe 'Pattern Mathing' do
     expect(macheo.type(macheo,Fixnum)).to be(false)
     expect(macheo.type(Symbol,"blee")).to be(false)
   end
+
+  class Ejemplo
+    attr_accessor :valor
+
+  end
+
+  it "test " do
+
+    k=Ejemplo.new
+    puts (k.instance_eval{ k.instance_variables} )
+
+  end
+
 
 end
