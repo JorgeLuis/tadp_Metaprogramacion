@@ -26,17 +26,28 @@ describe 'Pattern Mathing' do
     expect(macheo.type(Symbol,"blee")).to be(false)
   end
 
-  class Ejemplo
-    attr_accessor :valor
+  it 'test para verificar si se cumple si el objeto es una lista' do
+    an_array= [1,2,3,4]
+    other_array= [1,2,3]
+
+    myBlock= lambda do
+              |lista,condicion|
+
+              if condicion
+                lista.equal?an_array
+              else
+                an_array.include?lista
+              end
+
+            end
+
+    puts(myBlock.call(an_array,true))
+    puts(myBlock.call(an_array,false))
+    #puts(myBlock.call(other_array,true))
+
 
   end
 
-  it "test " do
-
-    k=Ejemplo.new
-    puts (k.instance_eval{ k.instance_variables} )
-
-  end
 
 
 end
