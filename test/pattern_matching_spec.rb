@@ -87,6 +87,26 @@ describe 'Pattern Mathing' do
     expect(m.duck_typing(:golpe, :patada, :descanso, pepe)).to eq(true)
     expect(m.duck_typing(:cagar, :jugar, :cariciar, pepe)).to eq(false)
   end
+
+#========================== TEST 2 OR ====================================
+
+  it 'test para probar combinador OR igual TRUE' do
+
+    combinador_Or = Combinators.new([:type, :type], Matcher)
+
+    combinador_Or.set_Matchers(:type, 5)
+    combinador_Or.set_Matchers(:type, 6)
+
+    expect(combinador_Or.or(Fixnum)).to eq(true)
+  end
+
+  it 'test para probar combinador OR igual FALSE' do
+
+    combinador_Or = Combinators.new([:type, :type], Matcher)
+
+    combinador_Or.set_Matchers(:type, 5)
+    combinador_Or.set_Matchers(:type, 'hola')
+
+    expect(combinador_Or.or(Fixnum)).to eq(false)
+  end
 end
-
-
