@@ -274,4 +274,10 @@ describe 'Pattern Mathing' do
 
     expect(combinador_And.and(Fixnum)).to eq(false)
   end
+
+  it 'test para probar combinador not con valor' do
+    combinador_not = Combinators.new(Matcher)
+    combinador_not.set_Matchers(:val,5)
+    expect(combinador_not.not(4)).to eq(false)
+  end
 end

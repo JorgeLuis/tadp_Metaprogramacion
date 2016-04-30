@@ -9,13 +9,13 @@ class Matcher
   end
 
   def duck_typing(*args, obj)
-    return args.all? { |method| obj.respond_to? method}
+    args.all? { |method| obj.respond_to? method}
   end
 end
 
 
 class Combinators
-  attr_reader :matchers, :a_Matcher
+  attr_accessor :matchers, :a_Matcher
 
   def initialize(a_Matcher)
     @a_Matcher = a_Matcher
@@ -48,8 +48,9 @@ class Combinators
     }
   end
 
-  def not
-
+  def not(compadador)
+    instancia = @a_Matcher.new
+    instancia.send "#{self.matchers[0].criterio}", self.matchers[0].valor ,compadador
   end
 
 
