@@ -29,8 +29,11 @@ class Combinators
     self.matchers[sym] = value
   end
 
-  def and
-
+  def and(comparador)
+    instancia = @a_Matcher.new
+    matchers.all? { |metodo_Matcher, valor|
+      instancia.send "#{metodo_Matcher}".to_sym, valor, comparador
+    }
   end
 
   def or(comparador)

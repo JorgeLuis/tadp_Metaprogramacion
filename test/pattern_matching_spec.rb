@@ -132,4 +132,26 @@ describe 'Pattern Mathing' do
 
     expect(combinador_Or.or(Fixnum)).to eq(false)
   end
+
+#========================== TEST 2 AND ====================================
+
+  it 'test para probar combinador AND igual TRUE' do
+
+    combinador_And = Combinators.new([:type, :type], Matcher)
+
+    combinador_And.set_Matchers(:type, 5)
+    combinador_And.set_Matchers(:type, 6)
+
+    expect(combinador_And.and(Fixnum)).to eq(true)
+  end
+
+  it 'test para probar combinador AND igual FALSE' do
+
+    combinador_And = Combinators.new([:type, :type], Matcher)
+
+    combinador_And.set_Matchers(:type, 5)
+    combinador_And.set_Matchers(:type, 'hola')
+
+    expect(combinador_And.and(Fixnum)).to eq(false)
+  end
 end
