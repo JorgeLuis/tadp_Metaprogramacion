@@ -150,7 +150,7 @@ describe 'Pattern Mathing' do
     combinador_And = Combinators.new([:type, :type], Matcher)
 
     combinador_And.set_Matchers(:type, 5)
-    combinador_And.set_Matchers(:type, 'hola')
+    combinador_And.set_Matchers(:type, 'holaaaa')
 
     expect(combinador_And.and(Fixnum)).to eq(false)
   end
