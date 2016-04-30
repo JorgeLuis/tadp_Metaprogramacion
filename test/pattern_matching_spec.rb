@@ -118,7 +118,7 @@ describe 'Pattern Mathing' do
     combinador_Or = Combinators.new(Matcher)
 
     combinador_Or.set_Matchers(:val, 5)
-    combinador_Or.set_Matchers(:val, 5)
+    combinador_Or.set_Matchers(:val, 6)
 
 =begin
     combinador_Or.matchers.each{|un_matcher|
@@ -178,10 +178,12 @@ describe 'Pattern Mathing' do
     combinador_Or.set_Matchers(:type, 1)
     combinador_Or.set_Matchers(:type, 6)
 
+=begin
     combinador_Or.matchers.each{|un_matcher|
       puts un_matcher.criterio
       puts un_matcher.valor
     }
+=end
 
 
     expect(combinador_Or.or(Fixnum)).to eq(true)
@@ -195,10 +197,31 @@ describe 'Pattern Mathing' do
     combinador_Or.set_Matchers(:type, 1)
     combinador_Or.set_Matchers(:type, 'hola')
 
+=begin
     combinador_Or.matchers.each{|un_matcher|
       puts un_matcher.criterio
       puts un_matcher.valor
     }
+=end
+
+
+    expect(combinador_Or.or(Fixnum)).to eq(true)
+  end
+
+  it 'test para probar combinador OR igual TRUE' do
+
+    combinador_Or = Combinators.new(Matcher)
+
+
+    combinador_Or.set_Matchers(:type, "hola")
+    combinador_Or.set_Matchers(:type, combinador_Or)
+
+=begin
+    combinador_Or.matchers.each{|un_matcher|
+      puts un_matcher.criterio
+      puts un_matcher.valor
+    }
+=end
 
 
     expect(combinador_Or.or(Integer)).to eq(false)
@@ -208,24 +231,33 @@ describe 'Pattern Mathing' do
 
     combinador_Or = Combinators.new(Matcher)
 
+    class A
+      def golpe
+      end
+    end
+    pepe = A.new
 
-    combinador_Or.set_Matchers(:type, 1)
-    combinador_Or.set_Matchers(:type, 1)
 
+    combinador_Or.set_Matchers(:type, pepe)
+    combinador_Or.set_Matchers(:type, combinador_Or)
+
+=begin
     combinador_Or.matchers.each{|un_matcher|
       puts un_matcher.criterio
       puts un_matcher.valor
     }
+=end
 
 
-    expect(combinador_Or.or(Integer)).to eq(true)
+    expect(combinador_Or.or(String)).to eq(false)
   end
+
 
 #========================== TEST 2 AND ====================================
 
   it 'test para probar combinador AND igual TRUE' do
 
-    combinador_And = Combinators.new([:type, :type], Matcher)
+    combinador_And = Combinators.new(Matcher)
 
     combinador_And.set_Matchers(:type, 5)
     combinador_And.set_Matchers(:type, 6)
@@ -235,7 +267,7 @@ describe 'Pattern Mathing' do
 
   it 'test para probar combinador AND igual FALSE' do
 
-    combinador_And = Combinators.new([:type, :type], Matcher)
+    combinador_And = Combinators.new(Matcher)
 
     combinador_And.set_Matchers(:type, 5)
     combinador_And.set_Matchers(:type, 'holaaaa')
