@@ -2,94 +2,59 @@ require 'rspec'
 require_relative '../scr/pattern_matching'
 
 describe 'Pattern Mathing' do
-  macheo = Matcher.new
-
 
 #========================== TEST 1A ====================================
   it 'Test: bindear una variable' do
-    a_variable_name= lambda do
-      |nombre|
-      nombre.to_sym
-      return true
-    end
-
-    expect(a_variable_name.call('anything')).to be(true)
+    a = Variable.new
+    expect(a.ejecutar('algo')).to be(true)
   end
 
 #========================== TEST 1B ====================================
 
   it 'Test: para probar comparacion de variables' do
-    criterioValor = Matcher.new
-    a = Matcher.new
-    b = Matcher.new
-
-    expect(criterioValor.val(5, 5)).to eq(true)
-    expect(criterioValor.val(5, '5')).to eq(false)
-    expect(criterioValor.val('a', 'a')).to eq(true)
-    expect(criterioValor.val(a, a)).to eq(true)
-    expect(criterioValor.val(a, b)).to eq(false)
+    criterioValor = Valor.new(5)
+    expect(criterioValor.ejecutar(5)).to be(true)
 
   end
 
 #========================== TEST 1C ====================================
 
   it 'Test: verifica si un objeto es del tipo indicado' do
-    expect(macheo.type(1,Fixnum)).to be(true)
-  end
+    un_tipo = Tipo.new(Fixnum)
+    otro_tipo = Tipo.new(Symbol)
+    expect(un_tipo.ejecutar(5)).to be(true)
+    expect(otro_tipo.ejecutar(':5')).to be(false)
+    expect(otro_tipo.ejecutar(:g)).to be(true)
 
-  it 'Test: verifica si un objeto no es del tipo indicado' do
-    expect(macheo.type(macheo,Fixnum)).to be(false)
-    expect(macheo.type(Symbol,"blee")).to be(false)
   end
-
 
 #========================== TEST 1D ====================================
 
   it 'Test: verifica si se cumple si el objeto es una lista' do
-    an_array= [1,2,3,4]
-    other_array= [1,2,3]
 
-    myBlock= lambda do
-              |lista,condicion,lista2|
+    an_array = [1,2,3,4]
+    other_array = [2,1,3,4]
+    tres =[1,2,3]
 
-              if lista.size == lista2.size
-               return lista.equal?lista2
-              end
+    a = Lista.new(an_array,true)
+    b = Lista.new(an_array,false)
+    c = Lista.new(tres,true)
+    d = Lista.new(tres,false)
+    e = Lista.new(other_array,true)
+    f = Lista.new(other_array,false)
+    g = Lista.new tres
 
-              if condicion
-                return false
+    expect(a.ejecutar(an_array)).to be(true)
+    expect(b.ejecutar(an_array)).to be(true)
 
-              elsif lista.size < lista2.size
-                  return lista.all?{ |x| lista2[x] }
-              elsif lista.size > lista2.size
-                return false
-              end
-    end
+    expect(c.ejecutar(an_array)).to be(false)
+    expect(d.ejecutar(an_array)).to be(true)
 
-    myBlock2= lambda do
-    |lista,lista2|
-      condicion = true
-      if lista.size == lista2.size
-        return lista.equal?lista2
-      end
+    expect(e.ejecutar(an_array)).to be(false)
+    expect(f.ejecutar(an_array)).to be(false)
 
-      if condicion
-        return false
-
-      elsif lista.size < lista2.size
-        return lista.all?{ |x| lista2[x] }
-      elsif lista.size > lista2.size
-        return false
-      end
-    end
-
-
-    expect(myBlock.call(an_array,true,an_array)).to be(true)
-    expect(myBlock.call(an_array,false,an_array)).to be(true)
-    expect(myBlock.call(other_array,true,an_array)).to be(false)
-    expect(myBlock.call(other_array,false,an_array)).to be(true)
-    expect(myBlock.call(an_array,false,other_array)).to be(false)
-    expect(myBlock2.call(other_array,an_array)).to be(false)
+    expect(g.ejecutar an_array).to be(false)
+    # falta la ultima prueba de las variables, no me acuerdo que dijo de eso.
 
   end
 
@@ -98,186 +63,40 @@ describe 'Pattern Mathing' do
 
   it 'Test: verifica si los metodos de una clase entiende un objeto' do
     class A
-      def golpe
-      end
-      def patada
-      end
-      def descanso
-      end
+      def golpe; end
+      def patada; end
+      def descanso; end
     end
     pepe = A.new
-    m = Matcher.new
-    expect(m.duck_typing(:golpe, :patada, :descanso, pepe)).to eq(true)
-    expect(m.duck_typing(:cagar, :jugar, :cariciar, pepe)).to eq(false)
+    cuak = Duck.new(:golpe, :patada, :descanso)
+    cuak_cuak = Duck.new(:cagar, :jugar, :cariciar)
+    expect(cuak.ejecutar pepe).to be(true)
+    expect(cuak_cuak.ejecutar pepe).to be(false)
+  end
+
+#========================== TEST 2 AND ====================================
+
+  it 'test para probar combinador AND igual TRUE' do
+    un_tipo = Tipo.new(Fixnum)
+    otro_tipo = Tipo.new(Integer)
+
+    un_conbinator_and = Combinators.new(un_tipo,otro_tipo)
+
+    #expect(un_conbinator_and.ejecutar(1)).to be(true)
   end
 
 #========================== TEST 2 OR ====================================
 
   it 'test para probar combinador OR igual TRUE' do
 
-    combinador_Or = Combinators.new(Matcher)
-
-    combinador_Or.set_Matchers(:val, 5)
-    combinador_Or.set_Matchers(:val, 6)
-
-=begin
-    combinador_Or.matchers.each{|un_matcher|
-      puts un_matcher.criterio
-      puts un_matcher.valor
-    }
-=end
-
-
-
-    expect(combinador_Or.or(5)).to eq(true)
-  end
-
-  it 'test para probar combinador OR igual FALSE' do
-
-    combinador_Or = Combinators.new(Matcher)
-
-
-    combinador_Or.set_Matchers(:val, 5)
-    combinador_Or.set_Matchers(:val, 6)
-
-=begin
-    combinador_Or.matchers.each{|un_matcher|
-      puts un_matcher.criterio
-      puts un_matcher.valor
-    }
-=end
-
-
-    expect(combinador_Or.or(7)).to eq(false)
-  end
-
-  it 'test para probar combinador OR igual TRUE' do
-
-    combinador_Or = Combinators.new(Matcher)
-
-
-    combinador_Or.set_Matchers(:val, 5)
-    combinador_Or.set_Matchers(:val, 6)
-
-#    combinador_Or.matchers.each{|un_matcher|
-#      puts un_matcher.criterio
-#      puts un_matcher.valor
-#    }
-
-
-    expect(combinador_Or.or(6)).to eq(true)
-  end
-
-    ########################### Type ######################
-
-  it 'test para probar combinador OR igual TRUE' do
-
-    combinador_Or = Combinators.new(Matcher)
-
-
-    combinador_Or.set_Matchers(:type, 1)
-    combinador_Or.set_Matchers(:type, 6)
-
-=begin
-    combinador_Or.matchers.each{|un_matcher|
-      puts un_matcher.criterio
-      puts un_matcher.valor
-    }
-=end
-
-
-    expect(combinador_Or.or(Fixnum)).to eq(true)
-  end
-
-  it 'test para probar combinador OR igual TRUE' do
-
-    combinador_Or = Combinators.new(Matcher)
-
-
-    combinador_Or.set_Matchers(:type, 1)
-    combinador_Or.set_Matchers(:type, 'hola')
-
-=begin
-    combinador_Or.matchers.each{|un_matcher|
-      puts un_matcher.criterio
-      puts un_matcher.valor
-    }
-=end
-
-
-    expect(combinador_Or.or(Fixnum)).to eq(true)
-  end
-
-  it 'test para probar combinador OR igual TRUE' do
-
-    combinador_Or = Combinators.new(Matcher)
-
-
-    combinador_Or.set_Matchers(:type, "hola")
-    combinador_Or.set_Matchers(:type, combinador_Or)
-
-=begin
-    combinador_Or.matchers.each{|un_matcher|
-      puts un_matcher.criterio
-      puts un_matcher.valor
-    }
-=end
-
-
-    expect(combinador_Or.or(Integer)).to eq(false)
-  end
-
-  it 'test para probar combinador OR igual TRUE' do
-
-    combinador_Or = Combinators.new(Matcher)
-
-    class A
-      def golpe
-      end
-    end
-    pepe = A.new
-
-
-    combinador_Or.set_Matchers(:type, pepe)
-    combinador_Or.set_Matchers(:type, combinador_Or)
-
-=begin
-    combinador_Or.matchers.each{|un_matcher|
-      puts un_matcher.criterio
-      puts un_matcher.valor
-    }
-=end
-
-
-    expect(combinador_Or.or(String)).to eq(false)
   end
 
 
-#========================== TEST 2 AND ====================================
+#========================== TEST 3 NOT ====================================
 
-  it 'test para probar combinador AND igual TRUE' do
+  it 'test para probar combinador NOT igual TRUE' do
 
-    combinador_And = Combinators.new(Matcher)
-
-    combinador_And.set_Matchers(:type, 5)
-    combinador_And.set_Matchers(:type, 6)
-
-    expect(combinador_And.and(Fixnum)).to eq(true)
   end
 
-  it 'test para probar combinador AND igual FALSE' do
 
-    combinador_And = Combinators.new(Matcher)
-
-    combinador_And.set_Matchers(:type, 5)
-    combinador_And.set_Matchers(:type, 'holaaaa')
-
-    expect(combinador_And.and(Fixnum)).to eq(false)
-  end
-
-  it 'test para probar combinador not con valor' do
-    combinador_not = Combinators.new(Matcher)
-    combinador_not.set_Matchers(:val,5)
-    expect(combinador_not.not(4)).to eq(false)
-  end
 end
