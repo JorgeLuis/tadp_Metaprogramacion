@@ -92,21 +92,109 @@ describe 'Pattern Mathing' do
 
   it 'test para probar combinador OR igual TRUE' do
 
-    combinador_Or = Combinators.new([:type, :type], Matcher)
+    combinador_Or = Combinators.new(Matcher)
 
-    combinador_Or.set_Matchers(:type, 5)
-    combinador_Or.set_Matchers(:type, 6)
+    combinador_Or.set_Matchers(:val, 5)
+    combinador_Or.set_Matchers(:val, 5)
 
-    expect(combinador_Or.or(Fixnum)).to eq(true)
+=begin
+    combinador_Or.matchers.each{|un_matcher|
+      puts un_matcher.criterio
+      puts un_matcher.valor
+    }
+=end
+
+
+
+    expect(combinador_Or.or(5)).to eq(true)
   end
 
   it 'test para probar combinador OR igual FALSE' do
 
-    combinador_Or = Combinators.new([:type, :type], Matcher)
+    combinador_Or = Combinators.new(Matcher)
 
-    combinador_Or.set_Matchers(:type, 5)
+
+    combinador_Or.set_Matchers(:val, 5)
+    combinador_Or.set_Matchers(:val, 6)
+
+=begin
+    combinador_Or.matchers.each{|un_matcher|
+      puts un_matcher.criterio
+      puts un_matcher.valor
+    }
+=end
+
+
+    expect(combinador_Or.or(7)).to eq(false)
+  end
+
+  it 'test para probar combinador OR igual TRUE' do
+
+    combinador_Or = Combinators.new(Matcher)
+
+
+    combinador_Or.set_Matchers(:val, 5)
+    combinador_Or.set_Matchers(:val, 6)
+
+#    combinador_Or.matchers.each{|un_matcher|
+#      puts un_matcher.criterio
+#      puts un_matcher.valor
+#    }
+
+
+    expect(combinador_Or.or(6)).to eq(true)
+  end
+
+    ########################### Type ######################
+
+  it 'test para probar combinador OR igual TRUE' do
+
+    combinador_Or = Combinators.new(Matcher)
+
+
+    combinador_Or.set_Matchers(:type, 1)
+    combinador_Or.set_Matchers(:type, 6)
+
+    combinador_Or.matchers.each{|un_matcher|
+      puts un_matcher.criterio
+      puts un_matcher.valor
+    }
+
+
+    expect(combinador_Or.or(Fixnum)).to eq(true)
+  end
+
+  it 'test para probar combinador OR igual TRUE' do
+
+    combinador_Or = Combinators.new(Matcher)
+
+
+    combinador_Or.set_Matchers(:type, 1)
     combinador_Or.set_Matchers(:type, 'hola')
 
-    expect(combinador_Or.or(Fixnum)).to eq(false)
+    combinador_Or.matchers.each{|un_matcher|
+      puts un_matcher.criterio
+      puts un_matcher.valor
+    }
+
+
+    expect(combinador_Or.or(Integer)).to eq(false)
+  end
+
+  it 'test para probar combinador OR igual TRUE' do
+
+    combinador_Or = Combinators.new(Matcher)
+
+
+    combinador_Or.set_Matchers(:type, 1)
+    combinador_Or.set_Matchers(:type, 1)
+
+    combinador_Or.matchers.each{|un_matcher|
+      puts un_matcher.criterio
+      puts un_matcher.valor
+    }
+
+
+    expect(combinador_Or.or(Integer)).to eq(true)
   end
 end
