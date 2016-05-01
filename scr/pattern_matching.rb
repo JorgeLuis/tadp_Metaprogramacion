@@ -8,8 +8,8 @@ class Matcher
     objeto.class.equal? tipo
   end
 
-  def duck_typing(*args, obj)
-    args.all? { |method| obj.respond_to? method}
+  def duck_typing(*args, obje)
+    args.all? { |method| obje.respond_to? method}
   end
 end
 
