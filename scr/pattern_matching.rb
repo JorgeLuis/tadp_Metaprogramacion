@@ -1,43 +1,78 @@
-class Matcher
-
-  def val(variable_A, variable_B)
-    variable_A.eql? variable_B
+class Variable
+  attr_accessor :var
+  def ejecutar (algo)
+    @var = algo
+    true
   end
-  
-  def type(objeto,tipo)
-    objeto.class.equal? tipo
+end
+
+class Valor
+  attr_accessor :primer_valor
+  def initialize(a)
+    @primer_valor=a
+  end
+  def ejecutar(segundo_valor)
+    self.primer_valor.eql?segundo_valor
+  end
+end
+
+class Tipo
+  attr_accessor :tipo
+  def initialize(un_tipo)
+    @tipo=un_tipo
+  end
+  def ejecutar(valor)
+      valor.is_a?self.tipo
+  end
+end
+
+class Lista
+  attr_accessor :lista, :condicion
+
+  def initialize(una_lista,una_condicion =true)
+    @lista=una_lista
+    @condicion=una_condicion
   end
 
-  def duck_typing(*args, obje)
-    args.all? { |method| obje.respond_to? method}
+  def ejecutar(otra_lista)
+    @tipo=Tipo.new(Variable)
+    if otra_lista.size<lista.size
+      igual_elementos = otra_lista.zip(lista).map { |x, y| if @tipo.ejecutar(x); x.ejecutar(y) else x==y  end}.all? { |z| z }
+    else
+      igual_elementos = lista.zip(otra_lista).map { |x, y| if @tipo.ejecutar(x); x.ejecutar(y) else x==y  end}.all? { |z| z }
+    end
+    igual_tamanio = otra_lista.size == lista.size
+    if condicion
+      igual_elementos & igual_tamanio
+    else
+      igual_elementos
+    end
+      end
+end
+
+class Duck
+  attr_accessor :metodos
+  def initialize(*argumentos)
+    @metodos=argumentos
+  end
+
+  def ejecutar(un_objeto)
+  self.metodos.all? { |method| un_objeto.respond_to? method}
   end
 end
 
 
 class Combinators
-  attr_accessor :matchers, :a_Matcher
+  attr_accessor :matchers
 
-  def initialize(a_Matcher)
-    @a_Matcher = a_Matcher
-    @matchers = []
+  def initialize(*un_matchers)
+    @matchers = un_matchers
   end
 
-  def set_Matchers(sym, a_valor)
-    struct_matcher = Struct.new(:criterio , :valor)
-    matcher = struct_matcher.new
-    matcher.criterio = sym
-    matcher.valor = a_valor
-    self.matchers << matcher
-#    self.matchers.each{|matcher, valor|
-#      if matcher.eql?(sym) and valor.nil?
-#        self.matchers[matcher] = a_value
-#      end}
-  end
-
-  def and(comparador)
-    instancia = @a_Matcher.new
-    matchers.all? { |un_Matcher|
-      instancia.send "#{un_Matcher.criterio}", un_Matcher.valor, comparador
+  def and
+  self.matchers.all? {
+      |un_Matcher|
+      instancia.send "#{un_Matcher}", un_Matcher
     }
   end
 
@@ -52,6 +87,4 @@ class Combinators
     instancia = @a_Matcher.new
     instancia.send "#{self.matchers[0].criterio}", self.matchers[0].valor ,compadador
   end
-
-
 end
