@@ -30,41 +30,53 @@ describe 'Pattern Mathing' do
 
 #========================== TEST 1D ====================================
 
-  it 'Test: verifica si se cumple si el objeto es una lista' do
+  it 'Test: verifica los test del enunciado' do
 
     an_array = [1,2,3,4]
     other_array = [2,1,3,4]
     tres =[1,2,3]
 
-    a = Lista.new(an_array,true)
-    b = Lista.new(an_array,false)
-    c = Lista.new(tres,true)
-    d = Lista.new(tres,false)
-    e = Lista.new(other_array,true)
-    f = Lista.new(other_array,false)
-    g = Lista.new tres
+    ###   list(values, match_size?)
 
+    #list([1, 2, 3, 4], true).call(an_array) #=> true
+    #list([1, 2, 3, 4], false).call(an_array) #=> true
+    a = Lista.new(an_array,true)
     expect(a.ejecutar(an_array)).to be(true)
+    b = Lista.new(an_array,false)
     expect(b.ejecutar(an_array)).to be(true)
 
+    #list([1, 2, 3], true).call(an_array) #=> false
+    #ist([1, 2, 3], false).call(an_array) #=> true
+    c = Lista.new(tres,true)
     expect(c.ejecutar(an_array)).to be(false)
+    d = Lista.new(tres,false)
     expect(d.ejecutar(an_array)).to be(true)
 
+    #list([2, 1, 3, 4], true).call(an_array) #=> false
+    #list([2, 1, 3, 4], false).call(an_array) #=> false
+    e = Lista.new(other_array,true)
     expect(e.ejecutar(an_array)).to be(false)
+    f = Lista.new(other_array,false)
     expect(f.ejecutar(an_array)).to be(false)
 
+    ###   Si no se especifica, match_size? se considera true
+
+    #list([1, 2, 3]).call(an_array) #=> false
+    g = Lista.new tres
     expect(g.ejecutar an_array).to be(false)
 
+    ###   También pueden combinarse con el Matcher de Variables
 
-    # Prueba de varialbes
+    #list([:a, :b, :c, :d]).call(an_array) #=> true
+
     a = Variable.new
     b = Variable.new
     c = Variable.new
-
-
-    variables = Lista.new([a,b,c],true)
-    expect(variables.ejecutar(tres)).to be(true)
+    sim=Lista.new([a,b,c])
+    expect(sim.ejecutar(tres)).to be(true)
     expect(a.var).to eq(1)  #Comprueba si se 'bindeo' en la variable descrita
+    expect(b.var).to eq(2)  #Comprueba si se 'bindeo' en la variable descrita
+    expect(c.var).to eq(3)  #Comprueba si se 'bindeo' en la variable descrita
 
   end
 
