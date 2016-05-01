@@ -60,7 +60,7 @@ describe 'Pattern Mathing' do
     c = Variable.new
     variables=[a,b,c]
     expect(variables.ejecutar(tres)).to be(true)
-    expect(a.var).to eq(1)  #Comprueba si se 'bindeo' en la variable
+    expect(a.var).to eq(1)  #Comprueba si se 'bindeo' en la variable descrita
 
   end
 
