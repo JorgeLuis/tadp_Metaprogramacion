@@ -35,10 +35,11 @@ class Lista
   end
 
   def ejecutar(otra_lista)
+    @tipo=Tipo.new(Variable)
     if otra_lista.size<lista.size
-      igual_elementos = otra_lista.zip(lista).map { |x, y| x == y }.all? { |z| z }
+      igual_elementos = otra_lista.zip(lista).map { |x, y| if @tipo.ejecutar(x); x.ejecutar(y) else x==y  end}.all? { |z| z }
     else
-      igual_elementos = lista.zip(otra_lista).map { |x, y| x == y }.all? { |z| z }
+      igual_elementos = lista.zip(otra_lista).map { |x, y| if @tipo.ejecutar(x); x.ejecutar(y) else x==y  end}.all? { |z| z }
     end
     igual_tamanio = otra_lista.size == lista.size
     if condicion
@@ -46,7 +47,7 @@ class Lista
     else
       igual_elementos
     end
-  end
+      end
 end
 
 class Duck
