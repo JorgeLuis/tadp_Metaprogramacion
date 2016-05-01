@@ -37,9 +37,9 @@ class Lista
   def ejecutar(otra_lista)
     @tipo=Tipo.new(Variable)
     if otra_lista.size<lista.size
-      igual_elementos = otra_lista.zip(lista).map { |x, y| if @tipo.ejecutar(x); x.ejecutar(y) else x==y  end}.all? { |z| z }
+      igual_elementos = otra_lista.zip(lista).all?{ |x, y| if @tipo.ejecutar(x); x.ejecutar(y) else x==y  end}
     else
-      igual_elementos = lista.zip(otra_lista).map { |x, y| if @tipo.ejecutar(x); x.ejecutar(y) else x==y  end}.all? { |z| z }
+      igual_elementos = lista.zip(otra_lista).all?{ |x, y| if @tipo.ejecutar(x); x.ejecutar(y) else x==y  end}
     end
     igual_tamanio = otra_lista.size == lista.size
     if condicion
