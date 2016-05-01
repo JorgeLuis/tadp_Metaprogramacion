@@ -54,13 +54,17 @@ describe 'Pattern Mathing' do
     expect(f.ejecutar(an_array)).to be(false)
 
     expect(g.ejecutar an_array).to be(false)
+
+
     # Prueba de varialbes
     a = Variable.new
     b = Variable.new
     c = Variable.new
-    variables=[a,b,c]
-    #expect(variables.ejecutar(tres)).to be(true)
-    #expect(a.var).to eq(1)  #Comprueba si se 'bindeo' en la variable descrita
+
+
+    variables = Lista.new([a,b,c],true)
+    expect(variables.ejecutar(tres)).to be(true)
+    expect(a.var).to eq(1)  #Comprueba si se 'bindeo' en la variable descrita
 
   end
 
