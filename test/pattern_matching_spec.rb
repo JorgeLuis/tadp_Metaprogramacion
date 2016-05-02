@@ -126,7 +126,19 @@ describe 'Pattern Mathing' do
   end
 #========================== TEST 3 NOT ====================================
 
-  it 'test para probar combinador NOT igual TRUE' do
+  it 'test para probar Combinators con NOT' do
+    module Atacante; end
+    module Defensor; end
+    class Muralla
+      include Defensor
+    end
+    class Misil
+      include Atacante
+    end
+    muralla= Muralla.new
+    misil= Misil.new
+    expect(Combinator1.new(Tipo.new Defensor).not.ejecutar(muralla)).to be(false)
+    expect(Combinator1.new(Tipo.new Defensor).not.ejecutar(misil)).to be(true)
 
   end
 
