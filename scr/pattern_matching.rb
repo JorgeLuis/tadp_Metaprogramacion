@@ -88,3 +88,34 @@ class Combinators
     instancia.send "#{self.matchers[0].criterio}", self.matchers[0].valor ,compadador
   end
 end
+
+class Patron
+  attr_accessor :matchers, :bloque
+
+  def with (*args,&un_bloque)
+    self.matchers =*args  #guardo la lista o elementos matchers
+    self.bloque = un_bloque
+  end
+
+  def otherwise (&un_bloque)
+    self.bloque = un_bloque
+  end
+
+  def ejecutar(un_objeto)
+    if self.match(un_objeto)  #Pregunto si matchea con todos los matchers
+      self.bloque.call(un_objeto) #Ejecuto el bloque con el objeto dado
+    end
+  end
+
+  def match(un_objeto)
+    self.matchers.all? {|matcher| matcher.ejecutar(un_objeto)} #comprueba si todos los matchers responden con un_obejto
+  end
+end
+
+class Animal
+  attr_accessor :energia
+  def comer
+    self.energia = 10
+  end
+end
+

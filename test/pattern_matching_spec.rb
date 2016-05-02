@@ -121,4 +121,26 @@ describe 'Pattern Mathing' do
   end
 
 
+
+#========================== TEST 3 Pattern ====================================
+it 'test para probar un patron' do
+
+
+#with(type(Animal), duck(:fly)) { ... }
+
+un_tipo=Tipo.new(Animal)
+un_duck=Duck.new(:comer)
+un_bloque=lambda do |x| x.comer end
+
+un_patron=Patron.new
+un_patron.with(un_tipo,un_duck,un_bloque)
+
+ave=Animal.new
+un_patron.ejecutar(ave) #Le mando el objeto al patron
+
+expect(ave.energia).to eq(10)
+end
+
+
+
 end
