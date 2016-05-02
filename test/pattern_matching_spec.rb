@@ -133,7 +133,7 @@ un_duck=Duck.new(:comer)
 un_bloque=lambda do |x| x.comer end
 
 un_patron=Patron.new
-un_patron.with(un_tipo,un_duck,un_bloque)
+un_patron.with(un_tipo,un_duck,&un_bloque)
 
 ave=Animal.new
 un_patron.ejecutar(ave) #Le mando el objeto al patron

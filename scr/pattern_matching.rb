@@ -93,7 +93,7 @@ class Patron
   attr_accessor :matchers, :bloque
 
   def with (*args,&un_bloque)
-    self.matchers =*args  #guardo la lista o elementos matchers
+    self.matchers =args  #guardo la lista o elementos matchers
     self.bloque = un_bloque
   end
 
