@@ -97,23 +97,33 @@ describe 'Pattern Mathing' do
   end
 
 #========================== TEST 2 AND ====================================
-
-  it 'test para probar combinador AND igual TRUE' do
-    un_tipo = Tipo.new(Fixnum)
-    otro_tipo = Tipo.new(Integer)
-
-    un_conbinator_and = Combinators.new(un_tipo,otro_tipo)
-
-    #expect(un_conbinator_and.ejecutar(1)).to be(true)
+  it 'test para probar Combinators con AND' do
+    module Atacante; end
+    module Defensor; end
+    class Guerrero
+      include Atacante
+      include Defensor
+    end
+    class Muralla
+      include Defensor
+    end
+    muralla= Muralla.new
+    guerrero= Guerrero.new
+    expect(Combinator1.new(Tipo.new Defensor).and(Tipo.new Atacante).ejecutar muralla).to be(false)
+    expect(Combinator1.new(Tipo.new Defensor).and(Tipo.new Atacante).ejecutar guerrero).to be(true)
+    expect(Combinator1.new(Duck.new(:+,:-)).and(Tipo.new(Fixnum),Valor.new(5)).ejecutar 5).to be(true)
   end
-
-#========================== TEST 2 OR ====================================
-
-  it 'test para probar combinador OR igual TRUE' do
-
+#========================== TEST 2 AND ====================================
+  it 'test para probar Combinators con OR' do
+    module Atacante; end
+    module Defensor; end
+    class Muralla
+      include Defensor
+    end
+    muralla= Muralla.new
+    expect(Combinator1.new(Tipo.new Defensor).or(Tipo.new Atacante).ejecutar muralla).to be(true)
+    expect(Combinator1.new(Tipo.new Defensor).or(Tipo.new Atacante).ejecutar 'un delfin').to be(false)
   end
-
-
 #========================== TEST 3 NOT ====================================
 
   it 'test para probar combinador NOT igual TRUE' do
