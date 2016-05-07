@@ -1,3 +1,10 @@
+# class Symbol
+#   def ejecutar (algo)
+#     instance_eval "#{self.to_s} = #{algo}"
+#     true
+#   end
+# end
+
 class Variable
   attr_accessor :var
   def ejecutar (algo)
@@ -162,33 +169,32 @@ class Combinator1
     resultado
   end
 end
+
 class Patron
-  attr_accessor :matchers, :bloque
+  attr_accessor :coleccion, :bloques, :excepcion
+
+  def initialize
+    @coleccion, @bloques= [], []
+  end
 
   def with (*args,&un_bloque)
-    self.matchers =args  #guardo la lista o elementos matchers
-    self.bloque = un_bloque
+    self.coleccion.push(args)
+    self.bloques << un_bloque
   end
 
   def otherwise (&un_bloque)
-    self.bloque = un_bloque
-  end
-
-  def ejecutar(un_objeto)
-    if self.match(un_objeto)  #Pregunto si matchea con todos los matchers
-      self.bloque.call(un_objeto) #Ejecuto el bloque con el objeto dado
-    end
+    @excepcion= un_bloque
   end
 
   def match(un_objeto)
-    self.matchers.all? {|matcher| matcher.ejecutar(un_objeto)} #comprueba si todos los matchers responden con un_obejto
+    resultado = false
+    self.coleccion.each_with_index do |matchers, pos|
+      resultado = matchers.all?{|matcher| matcher.ejecutar(un_objeto)}
+        if resultado
+          self.bloques[pos].call un_objeto
+          break
+        end
+    end
+    self.excepcion.call unless resultado
   end
 end
-
-class Animal
-  attr_accessor :energia
-  def comer
-    self.energia = 10
-  end
-end
-

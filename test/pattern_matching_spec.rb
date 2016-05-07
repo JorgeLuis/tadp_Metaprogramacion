@@ -5,15 +5,16 @@ describe 'Pattern Mathing' do
 
 #========================== TEST 1A ====================================
   it 'Test: bindear una variable' do
-    a = Variable.new
-    expect(a.ejecutar('algo')).to be(true)
+    # Intente bildearlo con la clase Symbol (comentado en la src) pero se puede con variables locales.... para consultar.
+      a = Variable.new
+      expect(a.ejecutar('algo')).to be(true)
   end
 
 #========================== TEST 1B ====================================
 
   it 'Test: para probar comparacion de variables' do
-    criterioValor = Valor.new(5)
-    expect(criterioValor.ejecutar(5)).to be(true)
+    criterio_valor = Valor.new(5)
+    expect(criterio_valor.ejecutar(5)).to be(true)
 
   end
 
@@ -145,23 +146,24 @@ describe 'Pattern Mathing' do
 
 
 #========================== TEST 3 Pattern ====================================
-it 'test para probar un patron' do
+  it 'test para probar un patron' do
 
 
-#with(type(Animal), duck(:fly)) { ... }
+  #with(type(Animal), duck(:fly)) { ... }
 
-un_tipo=Tipo.new(Animal)
-un_duck=Duck.new(:comer)
-un_bloque=lambda do |x| x.comer end
+    class Animal
+      def comer
+        'guau'
+      end
+    end
 
-un_patron=Patron.new
-un_patron.with(un_tipo,un_duck,&un_bloque)
-
-ave=Animal.new
-un_patron.ejecutar(ave) #Le mando el objeto al patron
-
-expect(ave.energia).to eq(10)
-end
+  un_patron=Patron.new
+  un_patron.with(Tipo.new(Animal),Duck.new(:comer)){|x| x.comer}
+  un_patron.otherwise {'miau'}
+  perro=Animal.new
+  # Tengo que revisar porque devuelve nil
+  expect(un_patron.match(perro)).to eq('guau')
+  end
 
 
 
