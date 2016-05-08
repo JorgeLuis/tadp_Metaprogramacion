@@ -104,7 +104,7 @@ describe 'Pattern Mathing' do
     expect(Lista.new([Tipo.new(Integer), 2, Duck.new(:times,:step), Tipo.new(Fixnum)], false).ejecutar([1,2])).to be(true)
     # list([m1,e2,e3,m4], true).call([1,2,'a',[1,2,3]])
     expect(Lista.new([Tipo.new(Integer), 2, 'a', Tipo.new(Array)], true).ejecutar([1,2,'a',[1,2,3]])).to be(true)
-    # list([m1,e2,e3,m4], true).call([1,2,'a')
+    # list([m1,e2,e3,m4], true).call([1,2,'a',[1,2,3]])
     expect(Lista.new([Tipo.new(Integer), 2, 'a', Tipo.new(Array)], true).ejecutar([1,2,'a',[1,2,3]])).to be(true)
     # list([m1,e2,e3,m4], false).call(['a',2,'a'])
     expect(Lista.new([Tipo.new(Integer), 2, 'a', Tipo.new(Array)], false).ejecutar(['a',2,'a'])).to be(false)
