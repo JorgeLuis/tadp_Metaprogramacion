@@ -79,6 +79,36 @@ describe 'Pattern Mathing' do
     expect(b.var).to eq(2)  #Comprueba si se 'bindeo' en la variable descrita
     expect(c.var).to eq(3)  #Comprueba si se 'bindeo' en la variable descrita
 
+
+    # Listas de matchers a evaluar
+    # m1,m2,m3 .... matchers
+    # e1,e2 ..... elementos (1,'s',...)
+
+    # list([m1,m2], true).call(2)
+    expect(Lista.new([Tipo.new(Integer), Duck.new(:times,:step)], true).ejecutar(2)).to be(false)
+    # list([m1,m2], true).call([2,3])
+    expect(Lista.new([Tipo.new(Integer), Duck.new(:times,:step)], true).ejecutar([2,3])).to be(true)
+    # list([m1,m2], false).call([2,3])
+    expect(Lista.new([Tipo.new(Integer), Duck.new(:times,:step)], false).ejecutar([2,3])).to be(true)
+    # list([m1,m2], false).call([1,2,3,4])
+    expect(Lista.new([Tipo.new(Integer), Duck.new(:times,:step)], false).ejecutar([1,2,3,4])).to be(true)
+    # list([m1,m2,m3], true).call([2,3,4])
+    expect(Lista.new([Tipo.new(Integer), Duck.new(:times,:step), Tipo.new(Fixnum)], true).ejecutar([2,3,4])).to be(true)
+    # list([m1,m2,m3], false).call([2,3,4])
+    expect(Lista.new([Tipo.new(Integer), Duck.new(:times,:step), Tipo.new(Fixnum)], false).ejecutar([2,3,4])).to be(true)
+    # list([m1,m2,m3], true).call([2])
+    expect(Lista.new([Tipo.new(Integer), Duck.new(:times,:step), Tipo.new(Fixnum)], true).ejecutar([2])).to be(false)
+    # list([m1,m2,m3], false).call([2])
+    expect(Lista.new([Tipo.new(Integer), Duck.new(:times,:step), Tipo.new(Fixnum)], false).ejecutar([2])).to be(true)
+    # list([m1,e2,m3], false).call([1,2])
+    expect(Lista.new([Tipo.new(Integer), 2, Duck.new(:times,:step), Tipo.new(Fixnum)], false).ejecutar([1,2])).to be(true)
+    # list([m1,e2,e3,m4], true).call([1,2,'a',[1,2,3]])
+    expect(Lista.new([Tipo.new(Integer), 2, 'a', Tipo.new(Array)], true).ejecutar([1,2,'a',[1,2,3]])).to be(true)
+    # list([m1,e2,e3,m4], true).call([1,2,'a')
+    expect(Lista.new([Tipo.new(Integer), 2, 'a', Tipo.new(Array)], true).ejecutar([1,2,'a',[1,2,3]])).to be(true)
+    # list([m1,e2,e3,m4], false).call(['a',2,'a'])
+    expect(Lista.new([Tipo.new(Integer), 2, 'a', Tipo.new(Array)], false).ejecutar(['a',2,'a'])).to be(false)
+
   end
 
 
