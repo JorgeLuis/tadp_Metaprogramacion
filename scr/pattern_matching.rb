@@ -89,14 +89,7 @@ class Lista < Matcher
     else
       elementos_identicos
     end
-
-
-    # def son_iguales(objectos, objectos2)
-    #   objectos.zip(objectos2).all?{ |obj, obj2| if Matcher.es_matcher?(obj); obj2.ejecutar(obj) else obj==obj2 end}
-    # end
-
   end
-
 end
 
 class Duck < Matcher

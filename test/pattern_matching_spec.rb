@@ -127,7 +127,7 @@ describe 'Pattern Mathing' do
     expect(cuak_cuak.ejecutar pepe).to be(false)
   end
 
-#========================== TEST 2 AND ====================================
+#========================== TEST 2 ====================================
   it 'test para probar Combinators con AND' do
     module Atacante; end
     module Defensor; end
@@ -144,7 +144,7 @@ describe 'Pattern Mathing' do
     expect(Combinator1.new(Tipo.new Defensor).and(Tipo.new Atacante).ejecutar guerrero).to be(true)
     expect(Combinator1.new(Duck.new(:+,:-)).and(Tipo.new(Fixnum),Valor.new(5)).ejecutar 5).to be(true)
   end
-#========================== TEST 2 AND ====================================
+
   it 'test para probar Combinators con OR' do
     module Atacante; end
     module Defensor; end
@@ -155,7 +155,6 @@ describe 'Pattern Mathing' do
     expect(Combinator1.new(Tipo.new Defensor).or(Tipo.new Atacante).ejecutar muralla).to be(true)
     expect(Combinator1.new(Tipo.new Defensor).or(Tipo.new Atacante).ejecutar 'un delfin').to be(false)
   end
-#========================== TEST 3 NOT ====================================
 
   it 'test para probar Combinators con NOT' do
     module Atacante; end
@@ -170,7 +169,37 @@ describe 'Pattern Mathing' do
     misil= Misil.new
     expect(Combinator1.new(Tipo.new Defensor).not.ejecutar(muralla)).to be(false)
     expect(Combinator1.new(Tipo.new Defensor).not.ejecutar(misil)).to be(true)
+  end
 
+  it 'Test de integracion de los Combinators' do
+    module Delicado; end
+    module Enganiador; end
+    module Bondadoso; end
+    class Humano; end
+    class Papa < Humano
+      include Delicado
+      include Bondadoso
+      def bendecir; end
+      def rezar; end
+    end
+    class Delincuente < Humano
+      include Enganiador
+      def robar; end
+      def correr; end
+    end
+    comb1 = Combinator1.new(Tipo.new Papa).and(Tipo.new Delicado)
+    comb2 = Combinator1.new(Tipo.new(Humano), Duck.new(:robar, :correr)).or(Tipo.new(Papa))
+    comb3 = Combinator1.new(Duck.new(:abs), Tipo.new(Integer)).and(Valor.new(5))
+    comb4 = Combinator1.new(comb1).or(comb2)
+    comb5 = Combinator1.new(comb3).not
+    comb6 = Combinator1.new(comb4).and(comb5)
+    comb7 = Combinator1.new(comb6).or(Tipo.new(Integer))
+
+    expect(comb3.ejecutar 5).to be(true)
+    expect(comb4.ejecutar(Delincuente.new)).to be(true)
+    expect(comb5.ejecutar 1).to be(true)
+    expect(comb6.ejecutar 1).to be(false)
+    expect(comb7.ejecutar 9999999999).to be(true)
   end
 
 
