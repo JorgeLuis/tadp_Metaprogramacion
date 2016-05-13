@@ -1,5 +1,7 @@
 require 'rspec'
 require_relative '../scr/pattern_matching'
+require_relative '../scr/matches'
+require_relative '../scr/pattern'
 
 describe 'Pattern Mathing' do
 
@@ -240,9 +242,10 @@ describe 'Pattern Mathing' do
 
     expect(bloque.call(1)).to be(3)
 
-
-    matchers = [criterio_valor, a]
+    un_tipo = Tipo.new(Fixnum)
+    matchers = [un_tipo]
     m = Matches.new(matchers)
-    expect(m.matches? (x,bloque) ).to be(3)
+    expect(m.buscar_macheo(x)).to be(true)
+    #expect(m.matches? (x,bloque) ).to be(3)
   end
 end
