@@ -1,14 +1,15 @@
+require_relative '../scr/pattern'
 
 class Matches
   attr_accessor :patrones
 
-  def initialize (p)
-    @patrones=p
+  def initialize (patrones)
+    @patrones=patrones
   end
-  def self.matches?(object_match, &block)
+  def matches?(object_match, &block)
 
      un_match = self.buscar_macheo(object_match)
-     un_match ? self.ejecutar_bloque(block):
+     un_match ? self.ejecutar_bloque():
     raise EmptyMatchException.new("Can't call matches? without class and block")
 
   end

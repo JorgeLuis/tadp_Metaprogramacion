@@ -10,14 +10,14 @@ class Pattern
     un_mach ? ejecutar_match(un_mach,un_objeto): nil
   end
 
-  #falta testear
+
   def buscar_macheo(un_objeto)
-    #self.matchers.each { |match| match.call(un_objeto) }
+    self.matchers[un_objeto]
   end
 
-  #falta testear
+
   def ejecutar_match(un_mach,un_objeto)
-    #self.matchers[un_mach]
+    self.matchers[un_mach].call(un_objeto)
   end
 
   def self.with (matchers,&bloque)

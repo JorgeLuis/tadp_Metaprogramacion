@@ -205,6 +205,7 @@ describe 'Pattern Mathing' do
 
 
 #========================== TEST 3 Pattern ====================================
+
   # it 'test para probar un patron' do
   #
   #
@@ -225,5 +226,19 @@ describe 'Pattern Mathing' do
   # end
 
 
+#========================== TEST 4 ====================================
+  it 'Test Matches: x=[1,2,3] ' do
+    x=[1,2,3]
 
+    criterio_valor = Valor.new(2)
+    expect(criterio_valor.ejecutar(2)).to be(true)
+
+    a = Variable.new
+    expect(a.ejecutar('algo')).to be(true)
+
+    matchers = [criterio_valor, a]
+
+    m = Matches.new(matchers)
+    expect(m.matches? (x) ).to qe(3)
+  end
 end
