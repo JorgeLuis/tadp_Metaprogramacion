@@ -236,9 +236,13 @@ describe 'Pattern Mathing' do
     a = Variable.new
     expect(a.ejecutar('algo')).to be(true)
 
-    matchers = [criterio_valor, a]
+    bloque = proc{|e|e +2}
 
+    expect(bloque.call(1)).to be(3)
+
+
+    matchers = [criterio_valor, a]
     m = Matches.new(matchers)
-    expect(m.matches? (x) ).to qe(3)
+    expect(m.matches? (x,bloque) ).to be(3)
   end
 end

@@ -9,7 +9,7 @@ class Matches
   def matches?(object_match, &block)
 
      un_match = self.buscar_macheo(object_match)
-     un_match ? self.ejecutar_bloque():
+     if un_match ? self.ejecutar_bloque(block):
     raise EmptyMatchException.new("Can't call matches? without class and block")
 
   end
@@ -22,6 +22,7 @@ class Matches
     bloque.call()
   end
 
+  end
 end
 
 class EmptyMatchException < Exception
