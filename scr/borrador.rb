@@ -4,38 +4,58 @@ class Matcher
   end
 end
 
+class Object
+  def val(value)
+    Valor.new value
+  end
 
-class Valor
-	attr_accessor :value
-	def set(valor)
-		@value=valor
-	end
-	def call(obj)
-		self.value.eql? obj
-	end
+  def type(un_tipo)
+    Tipo.new un_tipo
+  end
+
+  def list(un_array, bool=true)
+    Lista.new(un_array,bool)
+  end
 end
 
-# class Symbol
-# 	attr_accessor :a
-# 	def call(obj)
-# 		@a=obj
-# 		true
-# 	end
-# end
+
+class Valor
+  attr_accessor :value
+  def initialize(valor)
+    @value=valor
+  end
+  def call(obj)
+    self.value.eql? obj
+  end
+end
+
+class Variable < Matcher
+  def initialize(simbolo,algo)
+    Object.send :attr_accessor, simbolo
+    send "#{simbolo.to_s}=".to_sym, algo
+  end
+end
+
+class Symbol
+  def call(obj)
+    Variable.new(self,obj)
+    true
+  end
+end
 
 class Tipo
-	attr_accessor :tipo
-  	def set(un_tipo)
-    	@tipo=un_tipo
-  	end
-  	def call(valor)
-      valor.is_a? self.tipo
+  attr_accessor :tipo
+  def initialize(un_tipo)
+    @tipo=un_tipo
+  end
+  def call(valor)
+    valor.is_a? self.tipo
   end
 end
 
 class Lista < Matcher
   attr_accessor :lista, :condicion, :estrategia
-  def set(una_lista,una_condicion =true)
+  def initialize(una_lista,una_condicion =true)
     @lista=una_lista
     @condicion=una_condicion
     @estrategia= Proc.new do |array|
@@ -55,7 +75,7 @@ class Lista < Matcher
       elementos_identicos = self.estrategia.call(un_array.zip(self.lista))
     else
       elementos_identicos = self.estrategia.call(self.lista.zip(un_array).map {|x| x.reverse})
-		end
+    end
     igual_tamanio = un_array.size == lista.size
     if condicion
       elementos_identicos & igual_tamanio
@@ -66,20 +86,7 @@ class Lista < Matcher
 end
 
 
-# Matchers
-def val(value)
-	return Valor.new.set value
-end
 
-def type(un_tipo)
-	return Tipo.new.set un_tipo
-end
-
-def list(un_array, bool=true)
-	return Lista.new.set(un_array,bool)
-end
-	
-	
 
 
 
@@ -88,7 +95,7 @@ end
 # val(5).call(6)
 # :a.call(5)
 # type(Integer).call(5)
-list([1,2,3],true).call([1,3])
+# list([1,2,3],true).call([1,3])
 
 
 # def hi
