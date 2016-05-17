@@ -1,9 +1,16 @@
 # class Symbol
 #   def ejecutar (algo)
-#     instance_eval "#{self.to_s} = #{algo}"
-#   end#     true
-
+#
+#
+#     def foo
+#       binding.local_variable_get(:a) #=> 1
+#     end
+#
+#
+#     true
+#   end
 # end
+
 
 # Esta clase sirve como padre para los diferentes tipos de matchers
 class Matcher
@@ -11,7 +18,7 @@ class Matcher
     x.is_a? self
   end
 end
-
+=begin
 class Variable < Matcher
   attr_accessor :var
   def ejecutar (algo)
@@ -19,6 +26,26 @@ class Variable < Matcher
     true
   end
 end
+=end
+
+class VariableSymbol < Matcher
+#  include Symbol
+  #attr_accessor :identificador
+=begin
+  def initialize(sym)
+    @identidicador = sym
+  end
+=end
+
+=begin
+  def ejecutar (sym, algo)
+    auxBinding = binding
+    auxBinding.local_variable_set(sym.to_sym, algo)
+    puts auxBinding.local_variable_get(sym.to_sym)
+    true
+  end
+end
+=end
 
 class Valor < Matcher
   attr_accessor :primer_valor

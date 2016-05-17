@@ -1,8 +1,9 @@
 
 class Pattern
-  attr_accessor :matchers
+  attr_accessor :matchers, :diccionario, :valor
 
-  def initialize
+  def initialize(valor)
+    @valor = valor
     @matchers ={}
   end
   def machea(un_objeto)
@@ -22,7 +23,16 @@ class Pattern
     self.matchers[un_mach].call(un_objeto)
   end
 
-  def self.with (matchers,&bloque)
-    self.matchers[matchers]=bloque
+  # def self.with (matchers,&bloque)
+  #   self.matchers[matchers]=bloque
+  # end
+
+  def self.with1 (*arg,&bloque)
+    @matchers = *arg
+    @matchers.each { |matcher| self.diccionario[matcher] = &bloque }
+    #diccionario.all? { |matcher| matcher.ejecutar(@valor) }
   end
+
+
+
 end

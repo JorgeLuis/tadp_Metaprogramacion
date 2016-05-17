@@ -1,5 +1,6 @@
 require 'rspec'
 require_relative '../scr/borrador'
+require_relative '../scr/matches_1'
 
 describe 'pruebas de borrador' do
 
@@ -18,4 +19,17 @@ describe 'pruebas de borrador' do
     expect(type(Symbol).call ':5').to be(false)
     expect(type(Symbol).call (:g)).to be(true)
   end
+
+  # it 'Test: sobre el punto 3' do
+  #   mat = Matches_1.new
+  #
+  #   expect(mat.matches?(type(Integer)){ 2 + 2 }).to be(4)
+  # end
+
+  it 'Test: sobre el punto 3' do
+    mat = Matches_1.new
+
+    expect(mat.matches?(2)do with(type(Integer){ 2 +2 }) end).to be(true)
+  end
+
 end

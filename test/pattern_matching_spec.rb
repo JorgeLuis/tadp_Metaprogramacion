@@ -1,20 +1,30 @@
 require 'rspec'
 require_relative '../scr/pattern_matching'
-require_relative '../scr/matches'
+#require_relative '../scr/matches'
 require_relative '../scr/pattern'
 
 describe 'Pattern Mathing' do
 
 #========================== TEST 1A ====================================
+
+=begin
   it 'Test: bindear una variable' do
     # Intente bildearlo con la clase Symbol (comentado en la src) pero se puede con variables locales.... para consultar.
-      a = Variable.new
-      expect(a.ejecutar('algo')).to be(true)
+    a = VariableSymbol.new()
+    expect(a.ejecutar(:b, 'algo')).to be(true)
   end
+=end
 
 #========================== TEST 1B ====================================
 
+
   it 'Test: para probar comparacion de variables' do
+    criterio_valor = Valor.new(5)
+    expect(criterio_valor.ejecutar(5)).to be(true)
+
+  end
+
+  it 'Test: para probar comparacion de variables symbol' do
     criterio_valor = Valor.new(5)
     expect(criterio_valor.ejecutar(5)).to be(true)
 
@@ -72,10 +82,13 @@ describe 'Pattern Mathing' do
 
     #list([:a, :b, :c, :d]).call(an_array) #=> true
 
-    a = Variable.new
+#    a = VariableSymbol.new(:a)
+=begin
     b = Variable.new
     c = Variable.new
-    sim=Lista.new([a,b,c])
+=end
+    sim=Lista.new([:a,:b,:c])
+
     expect(sim.ejecutar(tres)).to be(true)
     expect(a.var).to eq(1)  #Comprueba si se 'bindeo' en la variable descrita
     expect(b.var).to eq(2)  #Comprueba si se 'bindeo' en la variable descrita
@@ -242,10 +255,12 @@ describe 'Pattern Mathing' do
 
     expect(bloque.call(1)).to be(3)
 
-    un_tipo = Tipo.new(Fixnum)
+#    un_tipo = Tipo.new(Fixnum)
+=begin
     matchers = [un_tipo]
     m = Matches.new(matchers)
     expect(m.buscar_macheo(x)).to be(true)
     #expect(m.matches? (x,bloque) ).to be(3)
+=end
   end
 end
