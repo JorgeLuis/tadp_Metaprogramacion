@@ -31,7 +31,7 @@ describe 'pruebas de borrador' do
 
     expect(mat.matches?(2) do
       with(type Integer){ 2 +2 }
-    end).to be(true)
+    end).to be(4)
   end
 
 end

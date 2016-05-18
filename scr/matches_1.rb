@@ -13,7 +13,7 @@ class Matches_1
       #bindar variables
       # @valor.instance_eval block
       self.instance_exec(&block)
-      true
+      # true
     end
   end
 
