@@ -29,7 +29,9 @@ describe 'pruebas de borrador' do
   it 'Test: sobre el punto 3' do
     mat = Matches_1.new
 
-    expect(mat.matches?(2)do with(type(Integer){ 2 +2 }) end).to be(true)
+    expect(mat.matches?(2) do
+      with(type Integer){ 2 +2 }
+    end).to be(true)
   end
 
 end
