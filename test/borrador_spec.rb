@@ -14,7 +14,7 @@ describe 'pruebas de borrador' do
     expect(val('aaa').call('aab')).to eq(false)
   end
 
-  it 'Test: verifica si un objeto es del tipo indicado' do
+  it 'Matcher 1.c verifica si un objeto es del tipo indicado' do
     expect(type(Integer).call 5).to be(true)
     expect(type(Symbol).call ':5').to be(false)
     expect(type(Symbol).call (:g)).to be(true)
@@ -26,12 +26,7 @@ describe 'pruebas de borrador' do
   #   expect(mat.matches?(type(Integer)){ 2 + 2 }).to be(4)
   # end
 
-  it 'Test: sobre el punto 3' do
-    mat = Matches_1.new
 
-    expect(mat.matches?(2) do
-      with(type Integer){ 2 +2 }
-    end).to be(4)
-  end
+
 
 end

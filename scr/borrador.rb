@@ -16,6 +16,20 @@ class Object
   def list(un_array, bool=true)
     Lista.new(un_array,bool)
   end
+
+  #segun los test del punto 4 tiene que ir en object
+  #x = [ 1 , 2 , 3 ] o x = Object .new  o x =2
+  def matches?(valor, &block_patterns)
+    @valor = valor
+    self.instance_eval(&block_patterns)
+  end
+
+
+  def matches2?(*possible_matchs, &block)
+    matches_pattern = possible_matchs.flat_map
+
+    matches_pattern.select{|match| Matches_1.new(match).cumple_pattern?.instance_eval &block }
+  end
 end
 
 

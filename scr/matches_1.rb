@@ -2,8 +2,8 @@ class Matches_1
 
   attr_accessor :pattern, :block, :valor
 
-  def initialize
-    @pattern = []
+  def initialize(*arg)
+    @pattern = arg || []
   end
 
   def with(*arg, &block)
@@ -17,8 +17,7 @@ class Matches_1
     end
   end
 
-  def matches?(valor, &block_patterns)
-    @valor = valor
+  def otherwise(&block_patterns)
     self.instance_eval(&block_patterns)
   end
 
