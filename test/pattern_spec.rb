@@ -1,5 +1,5 @@
 require 'rspec'
-require_relative '../scr/borrador'
+require_relative '../scr/Pattern_Matching_v2'
 require_relative '../scr/matches_1'
 
 context 'Test de los patrones' do
@@ -40,8 +40,8 @@ context 'Test de los patrones' do
 
   it 'Test punto 3 con matcher list' do
     mat = Matches_1.new #esto tiene que ser x = [ 1 , 2 , 3 ]
-    expect(mat.matches?([ 1 , 2 ]) do
-             with(list([:a, 2])){ a +2 }
+    expect(mat.matches?([1 , 2]) do
+             with(list([:a, 2], true)){ a + 2 }
              # with(list([ 1 , 2 , 3 ])){true}
            end).to be(3)
   end

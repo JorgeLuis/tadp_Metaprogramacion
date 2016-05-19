@@ -12,7 +12,7 @@ class Matches_1
     if cumple_pattern?
       #bindar variables
       # @valor.instance_eval block
-      #self.instance_exec(&block)
+      self.instance_exec(&block)
 
       # true
     end
