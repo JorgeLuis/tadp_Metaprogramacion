@@ -5,6 +5,7 @@ require_relative '../scr/matches_1'
 context 'Test de los patrones' do
 
 
+=begin
   it 'Test punto 3 con matcher :a' do
     x = Matches_1.new
     expect(x.matches?(2) do
@@ -35,6 +36,7 @@ context 'Test de los patrones' do
   #            # with(list([ 1 , 2 , 3 ])){true}
   #          end).to be([ 1 , 2 ])
   # end
+=end
 
   it 'Test punto 3 con matcher list' do
     mat = Matches_1.new #esto tiene que ser x = [ 1 , 2 , 3 ]

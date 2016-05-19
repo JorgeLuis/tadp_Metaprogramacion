@@ -47,6 +47,7 @@ class Variable < Matcher
   def initialize(simbolo,algo)
     Object.send :attr_accessor, simbolo
     send "#{simbolo.to_s}=".to_sym, algo
+    eval(simbolo.to_s, binding)
   end
 end
 
@@ -85,7 +86,11 @@ class Lista < Matcher
           if Symbol.es_symbol? e2
             e2.call(e1)
           else
-            e1 == e2
+            if Symbol.es_symbol? e1
+              e1.call(e2)
+            else
+              e1 == e2
+            end
           end
         end
       end
