@@ -20,12 +20,6 @@ end
 # Open Class Object
 class Object
   include Operadores
-  def bindear(sym, value)
-    # self.class.class_eval {attr_accessor sym}
-    # instance_variable_set("@#{sym.to_s}".to_sym, value)
-    # send "$#{sym.to_s}=".to_sym, value
-    true
-  end
   # Sintaxis de los matchers, menos la de variable que es un simbolo
   def val(value)
     Valor.new value
@@ -39,15 +33,8 @@ class Object
   def duck(*args)
     Duck.new(*args)
   end
-
 end
 
-# Open Class Symbol
-class Symbol
-  def call(x)
-    Variable.new.set self, x
-  end
-end
 
 # Padre de los matchers
 class Matcher
@@ -56,6 +43,14 @@ class Matcher
   end
 end
 
+# Open Class Symbol, simula al matcher variable
+class Symbol
+  def call(x)
+    # Variable.new.set self, x
+    Object.send :define_method, self, &proc{x}
+    true
+  end
+end
 # Matchers
 class Variable
   def set(sym, x)

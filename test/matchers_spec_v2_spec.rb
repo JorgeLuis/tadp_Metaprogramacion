@@ -5,8 +5,8 @@ describe 'Test de los 5 tipos de matchers' do
 
   # let(:k){}
   it '1.1.1 - Primer matcher de variable, debe retornar true siempre' do
-    expect(:k.call 5).to eq(true)
-    # expect(k).to eq(5)
+    expect(:i.call 5).to eq(true)
+    expect(i).to eq(5)
   end
 
   it '1.2.1 - Segundo matcher de valor, debe retornar true si ambos valores son iguales' do
