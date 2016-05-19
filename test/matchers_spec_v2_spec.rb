@@ -20,7 +20,7 @@ describe 'Test de los 5 tipos de matchers' do
   it '1.4.1 - Cuarto matcher de lista, debe retornar true si los primeros valores
       con el otro vector' do
     x = [1,2,3]
-    expect(list([1,2,3,4], false).call x).to eq(true)
+    expect(list([1,2,3,4],false).call x).to eq(true)
   end
 
   it '1.5.1 - Quinto matcher de duck, debe retornar true si la instancia

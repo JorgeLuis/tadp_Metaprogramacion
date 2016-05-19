@@ -1,7 +1,7 @@
 require 'rspec'
 require_relative '../scr/pattern_matching'
 #require_relative '../scr/matches'
-require_relative '../scr/pattern'
+# require_relative '../scr/pattern'
 
 describe 'Pattern Mathing' do
 
@@ -221,24 +221,25 @@ describe 'Pattern Mathing' do
 
 #========================== TEST 3 Pattern ====================================
 
-  # it 'test para probar un patron' do
-  #
-  #
-  # #with(type(Animal), duck(:fly)) { ... }
-  #
-  #   class Animal
-  #     def comer
-  #       'guau'
-  #     end
-  #   end
-  #
-  # un_patron=Patron.new
-  # un_patron.with(Tipo.new(Animal),Duck.new(:comer)){|x| x.comer}
-  # un_patron.otherwise {'miau'}
-  # perro=Animal.new
-  # # Tengo que revisar porque devuelve nil
-  # expect(un_patron.match(perro)).to eq('guau')
-  # end
+  it 'test para probar un patron' do
+
+
+  #with(type(Animal), duck(:fly)) { ... }
+
+    class Animal
+      def comer
+        'guau'
+      end
+    end
+
+  un_patron=Patron.new
+  un_patron.with(Tipo.new(Animal),Duck.new(:comer)){2}
+  un_patron.with(Tipo.new(Animal),Duck.new(:comer)){3}
+  un_patron.otherwise {'miau'}
+  perro=Animal.new
+  # Tengo que revisar porque devuelve nil
+  expect(un_patron.match(perro)).to eq(2)
+  end
 
 
 #========================== TEST 4 ====================================

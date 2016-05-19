@@ -28,7 +28,7 @@ class Variable < Matcher
 end
 =end
 
-class VariableSymbol < Matcher
+# class VariableSymbol < Matcher
 #  include Symbol
   #attr_accessor :identificador
 =begin
@@ -189,7 +189,7 @@ class Patron
       resultado = matchers.all?{|matcher| matcher.ejecutar(un_objeto)}
         if resultado
           self.bloques[pos].call un_objeto
-          break
+          return
         end
     end
     self.excepcion.call unless resultado
