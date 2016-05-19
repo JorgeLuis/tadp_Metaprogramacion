@@ -12,10 +12,18 @@ class Matches_1
     if cumple_pattern?
       #bindar variables
       # @valor.instance_eval block
-      self.instance_exec(&block)
+      #self.instance_exec(&block)
+
       # true
     end
   end
+
+
+  def matches?(valor, &block_patterns)
+    @valor = valor
+    self.instance_eval(&block_patterns)
+  end
+
 
   def otherwise(&block_patterns)
     self.instance_eval(&block_patterns)

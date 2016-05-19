@@ -20,11 +20,11 @@ describe 'pruebas de borrador' do
     expect(type(Symbol).call (:g)).to be(true)
   end
 
-  # it 'Test: sobre el punto 3' do
-  #   mat = Matches_1.new
-  #
-  #   expect(mat.matches?(type(Integer)){ 2 + 2 }).to be(4)
-  # end
+  it 'Test: sobre el punto 3' do
+    mat = Matches_1.new
+
+    expect(mat.matches?(type(Integer)){ 2 + 2 }).to be(4)
+  end
 
 
 

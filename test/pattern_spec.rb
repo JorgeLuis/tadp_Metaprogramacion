@@ -28,14 +28,21 @@ context 'Test de los patrones' do
            end).to be(4)
   end
 
+  # it 'Test punto 3 con matcher list' do
+  #   mat = Matches_1.new #esto tiene que ser x = [ 1 , 2 , 3 ]
+  #   expect(mat.matches?([ 1 , 2 ]) do
+  #            with(list([:a, val(2)])){ 2 +2 }
+  #            # with(list([ 1 , 2 , 3 ])){true}
+  #          end).to be([ 1 , 2 ])
+  # end
+
   it 'Test punto 3 con matcher list' do
     mat = Matches_1.new #esto tiene que ser x = [ 1 , 2 , 3 ]
-    expect(mat.matches2?([ 1 , 2 , 3 ]) do
-             with(type Integer){ 2 +2 }
-             with(list([ 1 , 2 , 3 ])){true}
-           end).to be([ 1 , 2 , 3 ])
+    expect(mat.matches?([ 1 , 2 ]) do
+             with(list([:a, 2])){ a +2 }
+             # with(list([ 1 , 2 , 3 ])){true}
+           end).to be(3)
   end
-
 
 
 end

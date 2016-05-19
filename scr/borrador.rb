@@ -19,17 +19,17 @@ class Object
 
   #segun los test del punto 4 tiene que ir en object
   #x = [ 1 , 2 , 3 ] o x = Object .new  o x =2
-  def matches?(valor, &block_patterns)
-    @valor = valor
-    self.instance_eval(&block_patterns)
-  end
-
-
-  def matches2?(*possible_matchs, &block)
-    matches_pattern = possible_matchs.flat_map
-
-    matches_pattern.select{|match| Matches_1.new(match).cumple_pattern?.instance_eval &block }
-  end
+  # def matches?(valor, &block_patterns)
+  #   @valor = valor
+  #   self.instance_eval(&block_patterns)
+  # end
+  #
+  #
+  # def matches2?(*possible_matchs, &block)
+  #   matches_pattern = possible_matchs.flat_map
+  #
+  #   matches_pattern.select{|match| Matches_1.new(match).cumple_pattern?.instance_eval &block }
+  # end
 end
 
 
@@ -55,6 +55,11 @@ class Symbol
     Variable.new(self,obj)
     true
   end
+
+  def self.es_symbol? (x)
+    x.is_a? self
+  end
+
 end
 
 class Tipo
@@ -75,9 +80,13 @@ class Lista < Matcher
     @estrategia= Proc.new do |array|
       array.all? do |e1, e2| # Tomo un elemento del array y es [e1,e2]
         if Matcher.es_matcher? e2
-          e2.ejecutar e1 # e2 es un matcher, ej: type(Integer).call(6)
+          e2.call e1 # e2 es un matcher, ej: type(Integer).call(6)
         else
-          e1 == e2
+          if Symbol.es_symbol? e2
+            e2.call(e1)
+          else
+            e1 == e2
+          end
         end
       end
     end
