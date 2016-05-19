@@ -20,6 +20,27 @@ class Matches_1
     self.instance_eval(&block_patterns)
   end
 
+   def matches2?(object_match, &block)
+         lista_matches= object_match.flapmap
+         matches_encontrados =buscar_macheo(lista_matches)
+
+         #sino existe un match encontes que lance una exeption
+         if matches_encontrados.nil?
+        raise EmptyMatchException.new("Can't call matches? without class and block")
+        end
+
+         self.instance_eval(&block_patterns)
+
+   end
+
+    #busca si se cumple algun match de la lista, con el select
+    #hace un filter como el de haskell, sino encuentra devuelve la lista vacia
+    #de la lista trae el primero.
+    #la funcion tiene que devolver el primer matcheo de la lista o nill
+   def buscar_macheo (lista_matches)
+     return   (lista_matches.select{|m|m.call(@valor)}).firts  #aca puede ser que rompe!!!
+   end
+
   def otherwise(&block_patterns)
     self.instance_eval(&block_patterns)
   end
@@ -29,4 +50,9 @@ class Matches_1
       matcher.call(@valor)
     end
   end
+end
+
+
+class EmptyMatchException<Exception
+
 end
