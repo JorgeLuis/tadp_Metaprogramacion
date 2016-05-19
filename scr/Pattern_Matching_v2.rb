@@ -52,12 +52,6 @@ class Symbol
   end
 end
 # Matchers
-class Variable
-  def set(sym, x)
-    bindear sym, x
-  end
-end
-
 class Valor
   attr_accessor :valor
   def initialize(value)
