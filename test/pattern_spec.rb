@@ -39,11 +39,44 @@ context 'Test de los patrones' do
 =end
 
   it 'Test punto 3 con matcher list' do
-    mat = Matches_1.new #esto tiene que ser x = [ 1 , 2 , 3 ]
-    expect(mat.matches?([1 , 2]) do
-             with(list([ 5 , 4 , 3 ],true)){true}
-             with(list([:a, 2], true)){ a + 2 }
-             with(list([ 1 , 2 , 3 ],true)){true}
+    # mat = Matches_1.new #esto tiene que ser x = [ 1 , 2 , 3 ]
+    expect(matches?([1 , 2]) do
+             with1(list([ 5 , 4 , 3 ],true)){true}
+             with1(list([:a, 2], true)){ a + 2 }
+             with1(list([:a, 2], true)){ a + 3 }
+             with1(list([ 1 , 2 , 3 ],true)){true}
+           end).to be(3)
+  end
+
+  it 'Test punto 3 con matcher list' do
+    # mat = Matches_1.new #esto tiene que ser x = [ 1 , 2 , 3 ]
+    expect(matches?([1 , 2]) do
+             with1(list([ 5 , 4 , 3 ],true), type(Integer)){true}
+             with1(list([:a, 2], true)){ a + 2 }
+             with1(list([:a, 2], true)){ a + 3 }
+             with1(list([ 1 , 2 , 3 ],true)){true}
+           end).to be(3)
+  end
+
+
+  it 'Test punto 3 con matcher list' do
+    # mat = Matches_1.new #esto tiene que ser x = [ 1 , 2 , 3 ]
+    expect(matches?([1 , 2]) do
+             with1(list([ 5 , 4 , 3 ],true)){true}
+             with1(list([:a, 3], true)){ a + 2 }
+             with1(list([ 1 , 2 , 3 ],true)){true}
+             otherwise { 'aca si llego' }
+           end).to eq('aca si llego')
+  end
+
+
+  it 'Test punto 3 con matcher list' do
+    # mat = Matches_1.new #esto tiene que ser x = [ 1 , 2 , 3 ]
+    expect(matches?([1 , 2]) do
+             with1(list([ 5 , 4 , 3 ],true)){true}
+             with1(list([:a, 2], true)){ a + 2 }
+             with1(list([ 1 , 2 , 3 ],true)){true}
+             otherwise { 'aca no llego' }
            end).to be(3)
   end
 

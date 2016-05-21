@@ -35,7 +35,7 @@ class Object
   end
   # Pattern
   def matches?(x, &block_patterns)
-    Pattern.new.matches?(x, &block_patterns)
+    Matches_1.new.matches?(x, &block_patterns)
   end
 end
 
