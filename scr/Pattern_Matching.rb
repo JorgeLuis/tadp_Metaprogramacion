@@ -7,10 +7,10 @@ end
 module Operadores
   include Validar
   def and(*args)
-    And.new(valida(self), valida(*args))
+    And.new(valida(self), valida(args))
   end
   def or(*args)
-    Or.new(valida(self), valida(*args))
+    Or.new(valida(self), valida(args))
   end
   def not
     Not.new(valida(self))
@@ -79,7 +79,7 @@ end
 
 class Lista < Matcher
   attr_accessor :lista, :condicion, :estrategia
-  def initialize(una_lista,una_condicion =true)
+  def initialize(una_lista,una_condicion)
     @lista, @condicion=una_lista, una_condicion
     @estrategia= Proc.new do |array|
       array.all? do |e1, e2| # Tomo un elemento del array y es [e1,e2]
@@ -95,7 +95,7 @@ class Lista < Matcher
   def call(un_array)
     return false unless un_array.is_a? Array # Condicion necesaria: debe ser un Array
     if un_array.size <= self.lista.size
-      elementos_identicos = self.estrategia.call(un_array.zip(self.lista))
+      elementos_identicos = self.estrategia.call(un_array.zip(self.lista)) # [[1,2],[3,:f],[]]
     else
       elementos_identicos = self.estrategia.call(self.lista.zip(un_array).map {|x| x.reverse})
     end
@@ -137,7 +137,7 @@ class And < Combinator
 end
 class Or < Combinator
   def call(x)
-    (self.left+self.right).any?{|matcher| matcher.call x}
+    self.left.all?{|matcher| matcher.call x} || self.right.all?{|matcher| matcher.call x}
   end
 end
 class Not < Combinator

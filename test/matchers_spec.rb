@@ -3,7 +3,6 @@ require_relative '../scr/Pattern_Matching'
 
 describe 'Test de los 5 tipos de matchers' do
 
-  # let(:k){}
   it '1.1.1 - Primer matcher de variable, debe retornar true siempre' do
     #:a_variable_name.call('anything') #=> true
     expect(:i.call 5).to eq(true)

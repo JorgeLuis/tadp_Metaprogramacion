@@ -1,6 +1,6 @@
 require 'rspec'
-require_relative '../scr/Pattern_Matching'
 require 'ostruct'
+require_relative '../scr/Pattern_Matching'
 
 describe 'Test de Pattern' do
   it 'Test punto 3 con matcher list' do
