@@ -117,7 +117,8 @@ context 'Test de los patrones' do
     x = 2
     expect(matches?(x) do
              with1(list([ 1, 2, 3], true)) { 'aca no llego' }
-           end).to eq('chau!')
+             otherwise { 'aca si llego' }
+           end).to eq('aca si llego')
   end
 
 end
