@@ -1,5 +1,5 @@
 require 'rspec'
-require_relative '../scr/Pattern_Matching_v2'
+require_relative '../scr/Pattern_Matching'
 
 describe 'Pruebas de los combinators' do
 

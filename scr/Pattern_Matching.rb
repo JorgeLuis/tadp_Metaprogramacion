@@ -35,7 +35,7 @@ class Object
   end
   # Pattern
   def matches?(x, &block_patterns)
-    Matches_1.new.matches?(x, &block_patterns)
+    Pattern.new.matches?(x, &block_patterns)
   end
 end
 
@@ -55,8 +55,9 @@ class Symbol
     true
   end
 end
+
 # Matchers
-class Valor
+class Valor < Matcher
   attr_accessor :valor
   def initialize(value)
     @valor= value
@@ -150,25 +151,23 @@ end
 
 # Pattern
 class Pattern
-  attr_accessor :pattern, :block, :valor
+  attr_accessor :patrones, :bloque_otherwise
+  def initialize
+    @patrones = []
+  end
   def with(*arg, &block)
-    @pattern = arg
-    @block = block
-    if cumple_pattern?
-      # @valor.instance_eval block
-      self.instance_exec(&block)
-    end
+    self.patrones << OpenStruct.new(:matchs=>arg, :bloque=>block)
   end
   def matches?(valor, &block_patterns)
-    @valor = valor
     self.instance_eval(&block_patterns)
-  end
-  def otherwise(&block_patterns)
-    self.instance_eval(&block_patterns)
-  end
-  def cumple_pattern?
-    @pattern.all? do |matcher|
-      matcher.call(@valor)
+    patron_ejecutar = self.patrones.select { |patron| patron.matchs.all?{|matcher| matcher.call valor}}.first
+    if patron_ejecutar.nil?
+      self.instance_eval(&self.bloque_otherwise)
+    else
+      self.instance_eval(&patron_ejecutar.bloque)
     end
+  end
+  def otherwise(&block_ejecutar)
+    @bloque_otherwise = block_ejecutar
   end
 end

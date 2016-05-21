@@ -1,5 +1,5 @@
 require 'rspec'
-require_relative '../scr/Pattern_Matching_v2'
+require_relative '../scr/Pattern_Matching'
 
 describe 'Test de los 5 tipos de matchers' do
 
