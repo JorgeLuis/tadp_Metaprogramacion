@@ -56,7 +56,7 @@ class Symbol
   end
 end
 # Matchers
-class Valor
+class Valor < Matcher
   attr_accessor :valor
   def initialize(value)
     @valor= value
