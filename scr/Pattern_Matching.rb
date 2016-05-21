@@ -27,7 +27,7 @@ class Object
   def type(tipo)
     Tipo.new tipo
   end
-  def list(array, eq_tam)
+  def list(array, eq_tam=true)
     Lista.new(array, eq_tam)
   end
   def duck(*args)
